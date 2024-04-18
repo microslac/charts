@@ -1,0 +1,14 @@
+apiVersion: v1
+entries:
+  common:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2024-04-18T14:59:41.142209189Z"
+    description: A Helm chart for Kubernetes
+    digest: 397a71a185f867fa2e13dc3bf58d8386229410cd35fb6d6f9c8d85193ec353ee
+    name: common
+    type: application
+    urls:
+    - https://github.com/microslac/charts/releases/download/common-0.1.0/common-0.1.0.tgz
+    version: 0.1.0
+generated: "2024-04-18T14:59:41.142215611Z"
