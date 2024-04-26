@@ -5,7 +5,7 @@ Helm's [documentation](https://helm.sh/docs) to get started.
 
 Once Helm has been set up correctly, add the repo as follows:
 ```
-helm repo add microslac https://microslac.github.io/charts
+helm repo add microslac https://charts.microslac.com
 ```
 
 If you had already added this repo earlier, run `helm repo update` to retrieve
@@ -14,7 +14,7 @@ microslac` to see the charts.
 
 To install the common chart:
 ```
-helm install common microslac/common
+helm install microslac micro/common
 ```
 
 To uninstall the chart:
