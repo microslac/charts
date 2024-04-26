@@ -1,0 +1,15 @@
+{{- if .Values.database.externalName -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.database.name }}
+  namespace: {{ .Values.global.environment }}
+  labels:
+    app: {{ .Values.database.name }}
+    {{- include "helm.labels" . | nindent 4 }}
+spec:
+  selector:
+    app: {{ .Values.database.name }}
+  type: ExternalName
+  externalName: {{ .Values.database.externalName }}
+{{- end }}

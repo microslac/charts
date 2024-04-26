@@ -1,0 +1,84 @@
+name: realtime
+nameOverride: ""
+fullnameOverride: ""
+
+replicaCount: 1
+
+serviceAccount:
+  create: true
+  automount: true
+  annotations: { }
+  name: ""
+
+image:
+  name: microslac/realtime
+  tag: "latest"
+  pullPolicy: IfNotPresent
+
+imagePullSecrets: [ ]
+
+config:
+  data:
+    apiHost: "0.0.0.0"
+    apiPort: "8016"
+    environment: ""
+    corsAllowOrigins: "[\"*\"]"
+    rabbitmqEnabled: "1"
+    v: "0.0.0"
+
+secret:
+  data:
+    dbHost: "postgres-slave"
+    dbPort: "5432"
+    dbDatabase: "client"
+    dbUsername: "postgres"
+    dbPassword: "password"
+
+    rabbitmqHost: "rabbitmq-primary"
+    rabbitmqPort: "5672"
+    rabbitmqUsername: "appuser"
+    rabbitmqPassword: "password"
+
+    redisPort: "6379"
+    redisHost: "redis-realtime-master"
+
+    websocketUrl: ""
+    websocketRegion: ""
+    websocketKeyId: ""
+    websocketKeySecret: ""
+
+service:
+  type: ClusterIP
+  port: 8016
+
+database:
+  name: ""
+  externalName: ""
+
+resources:
+  requests:
+    cpu: 1000m
+    memory: 1024Mi
+  limits:
+    cpu: 2000m
+    memory: 2048Mi
+
+livenessProbe: null
+
+readinessProbe: null
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+
+volumes: [ ]
+
+volumeMounts: [ ]
+
+nodeSelector: { }
+
+tolerations: [ ]
+
+affinity: { }

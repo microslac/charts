@@ -1,0 +1,87 @@
+name: auth
+nameOverride: ""
+fullnameOverride: ""
+
+replicaCount: 1
+
+serviceAccount:
+  create: true
+  automount: true
+  annotations: { }
+  name: ""
+
+image:
+  name: microslac/auth
+  tag: "latest"
+  pullPolicy: IfNotPresent
+
+imagePullSecrets: [ ]
+
+config:
+  data:
+    debug: ""
+    apiHost: "0.0.0.0"
+    apiPort: "8011"
+    environment: "dev"
+    djangoAllowedHosts: "*"
+    corsAllowedOrigins: ""
+    corsAllowAllOrigins: "1"
+    corsAllowCredentials: "1"
+    forceTls: "0"
+    v: "0.0.0"
+
+secret:
+  data:
+    secretKey: "dxn4tqgse47+2(i!9=k!*bac&!r@5qwuk31sfn&29bquhert0y"
+    dbHost: "postgres-master"
+    dbPort: "5432"
+    dbName: "auth"
+    dbUser: "postgres"
+    dbPassword: "password"
+
+    redisPort: "6379"
+    redisHost: "redis-realtime-master"
+
+    oauth2GoogleClientId: ""
+    oauth2GoogleClientSecret: ""
+    oauth2GithubClientId: ""
+    oauth2GithubClientSecret: ""
+    oauth2LinkedinClientId: ""
+    oauth2LinkedinClientSecret: ""
+
+
+service:
+  type: ClusterIp
+  port: 8011
+  clusterIp: 192.168.16.10
+
+database:
+  name: ""
+  externalName: ""
+
+resources:
+  requests:
+    cpu: 1000m
+    memory: 512Mi
+  limits:
+    cpu: 2000m
+    memory: 1024Mi
+
+livenessProbe: null
+readinessProbe: null
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+
+volumes: [ ]
+
+volumeMounts: [ ]
+
+nodeSelector: { }
+
+tolerations: [ ]
+
+affinity: { }

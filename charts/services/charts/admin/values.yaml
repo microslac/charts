@@ -1,0 +1,73 @@
+replicaCount: 1
+
+name: admin
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+  automount: true
+  annotations: { }
+  name: ""
+
+deployment:
+  image: microslac/admin
+  containerPort: 8010
+  imagePullPolicy: IfNotPresent
+  imagePullSecrets: [ ]
+
+config:
+  data:
+    debug: ""
+    apiHost: "0.0.0.0"
+    apiPort: "8010"
+    environment: "dev"
+    djangoAllowedHosts: "*"
+    corsAllowedOrigins: ""
+    corsAllowAllOrigins: "1"
+    corsAllowCredentials: "1"
+    v: "0.0.0"
+
+secret:
+  data:
+    secretKey: "dxn4tqgse47+2(i!9=k!*bac&!r@5qwuk31sfn&29bquhert0y"
+    dbHost: "postgres-master"
+    dbPort: "5432"
+    dbName: "admin"
+    dbUser: "postgres"
+    dbPassword: "password"
+
+service:
+  type: ClusterIP
+  port: 8010
+
+database:
+  name: ""
+  externalName: ""
+
+resources: { }
+
+livenessProbe:
+  httpGet:
+    path: /
+    port: http
+readinessProbe:
+  httpGet:
+    path: /
+    port: http
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+
+volumes: [ ]
+
+volumeMounts: [ ]
+
+nodeSelector: { }
+
+tolerations: [ ]
+
+affinity: { }

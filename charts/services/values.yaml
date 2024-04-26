@@ -1,0 +1,33 @@
+name: services
+nameOverride: ""
+fullnameOverride: ""
+
+admin:
+  enabled: false
+
+auth:
+  enabled: true
+
+client:
+  enabled: true
+
+teams:
+  enabled: true
+
+users:
+  enabled: true
+
+conversations:
+  enabled: true
+
+realtime:
+  enabled: true
+
+chat:
+  enabled: true
+
+inference:
+  enabled: true
+
+phi:
+  enabled: true

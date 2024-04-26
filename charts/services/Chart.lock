@@ -1,0 +1,33 @@
+dependencies:
+- name: admin
+  repository: file://charts/admin
+  version: 0.1.0
+- name: auth
+  repository: file://charts/auth
+  version: 0.1.0
+- name: conversations
+  repository: file://charts/conversations
+  version: 0.1.0
+- name: teams
+  repository: file://charts/teams
+  version: 0.1.0
+- name: users
+  repository: file://charts/users
+  version: 0.1.0
+- name: client
+  repository: file://charts/client
+  version: 0.1.0
+- name: realtime
+  repository: file://charts/realtime
+  version: 0.1.0
+- name: chat
+  repository: file://charts/chat
+  version: 0.1.0
+- name: inference
+  repository: file://charts/inference
+  version: 0.1.0
+- name: phi
+  repository: file://charts/phi
+  version: 0.1.0
+digest: sha256:d13384d755226b24ed101d90205955f3e460113745350cbcc925fac882206f6f
+generated: "2024-04-24T22:56:28.925398404+07:00"

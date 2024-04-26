@@ -1,0 +1,58 @@
+apiVersion: v2
+name: services
+description: A Helm chart for Kubernetes
+
+type: application
+version: 0.1.0
+appVersion: "1.16.0"
+
+dependencies:
+  - name: admin
+    condition: admin.enabled
+    repository: 'file://charts/admin'
+    version: 0.1.0
+
+  - name: auth
+    condition: auth.enabled
+    repository: 'file://charts/auth'
+    version: 0.1.0
+
+  - name: conversations
+    condition: conversations.enabled
+    repository: 'file://charts/conversations'
+    version: 0.1.0
+
+  - name: teams
+    condition: teams.enabled
+    repository: 'file://charts/teams'
+    version: 0.1.0
+
+  - name: users
+    condition: users.enabled
+    repository: 'file://charts/users'
+    version: 0.1.0
+
+  - name: client
+    condition: client.enabled
+    repository: 'file://charts/client'
+    version: 0.1.0
+
+  - name: realtime
+    condition: realtime.enabled
+    repository: 'file://charts/realtime'
+    version: 0.1.0
+
+  - name: chat
+    condition: chat.enabled
+    repository: 'file://charts/chat'
+    version: 0.1.0
+
+  - name: inference
+    condition: inference.enabled
+    repository: 'file://charts/inference'
+    version: 0.1.0
+
+  - name: phi
+    condition: phi.enabled
+    repository: 'file://charts/phi'
+    version: 0.1.0

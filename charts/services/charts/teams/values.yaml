@@ -1,0 +1,81 @@
+name: teams
+nameOverride: ""
+fullnameOverride: ""
+
+replicaCount: 1
+
+serviceAccount:
+  create: true
+  automount: true
+  annotations: { }
+  name: ""
+
+image:
+  name: microslac/teams
+  tag: "latest"
+  pullPolicy: IfNotPresent
+
+imagePullSecrets: [ ]
+
+config:
+  data:
+    debug: ""
+    apiHost: "0.0.0.0"
+    apiPort: "8012"
+    environment: "dev"
+    djangoAllowedHosts: "*"
+    corsAllowedOrigins: ""
+    corsAllowAllOrigins: "1"
+    corsAllowCredentials: "1"
+    rabbitmqEnabled: "1"
+    v: "0.0.0"
+
+secret:
+  data:
+    secretKey: "dxn4tqgse47+2(i!9=k!*bac&!r@5qwuk31sfn&29bquhert0y"
+    dbHost: "postgres-master"
+    dbPort: "5432"
+    dbName: "teams"
+    dbUser: "postgres"
+    dbPassword: "password"
+
+    rabbitmqHost: "rabbitmq-primary"
+    rabbitmqPort: "5672"
+    rabbitmqPassword: "password"
+    rabbitmqUsername: "appuser"
+
+service:
+  type: ClusterIP
+  port: 8012
+
+database:
+  name: ""
+  externalName: ""
+
+resources:
+  requests:
+    cpu: 1000m
+    memory: 512Mi
+  limits:
+    cpu: 2000m
+    memory: 1024Mi
+
+livenessProbe: null
+
+readinessProbe: null
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+
+volumes: [ ]
+
+volumeMounts: [ ]
+
+nodeSelector: { }
+
+tolerations: [ ]
+
+affinity: { }

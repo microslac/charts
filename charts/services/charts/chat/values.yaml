@@ -1,0 +1,81 @@
+name: chat
+nameOverride: ""
+fullnameOverride: ""
+
+replicaCount: 1
+
+serviceAccount:
+  create: true
+  automount: true
+  annotations: { }
+  name: ""
+
+image:
+  name: microslac/chat
+  tag: "latest"
+  pullPolicy: IfNotPresent
+
+config:
+  data:
+    apiHost: "0.0.0.0"
+    apiPort: "8017"
+    environment: ""
+    corsAllowOrigins: "[\"*\"]"
+    v: "0.0.0"
+
+secret:
+  data:
+    dbHost: "postgres-master"
+    dbPort: "5432"
+    dbDatabase: "chat"
+    dbUsername: "postgres"
+    dbPassword: "password"
+
+    rabbitmqHost: "rabbitmq-primary"
+    rabbitmqPort: "5672"
+    rabbitmqPassword: "password"
+    rabbitmqUsername: "appuser"
+
+    hfToken: ""
+    hfMistralEndpoint: "http://inference"
+    hfLlamaEndpoint: "http://inference"
+    hfPhiEndpoint: "http://phi"
+    hfMistralMaxNewTokens: "512"
+    hfLlamaMaxNewTokens: "512"
+    hfPhiMaxNewTokens: "512"
+
+service:
+  type: ClusterIP
+  port: 8017
+
+database:
+  name: ""
+  externalName: ""
+
+resources:
+  requests:
+    cpu: 1000m
+    memory: 512Mi
+  limits:
+    cpu: 2000m
+    memory: 1024Mi
+
+livenessProbe: null
+
+readinessProbe: null
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+
+volumes: [ ]
+
+volumeMounts: [ ]
+
+nodeSelector: { }
+
+tolerations: [ ]
+
+affinity: { }
