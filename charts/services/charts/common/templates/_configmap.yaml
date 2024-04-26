@@ -1,0 +1,13 @@
+{{- define "common.configmap" -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.name }}-config
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "helm.labels" . | nindent 4 }}
+data:
+{{- range $key, $value := .Values.config.data }}
+  {{ $key | snakecase | upper }}: {{ $value | quote }}
+{{- end }}
+{{- end }}
