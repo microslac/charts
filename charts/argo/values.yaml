@@ -1,4 +1,6 @@
-global: { }
+global:
+  nodeSelector:
+    node: master
 
 nameOverride: ""
 fullnameOverride: ""
@@ -24,3 +26,6 @@ argo-cd:
 
   applicationSet:
     replicas: 1
+
+  crds:
+    install: false

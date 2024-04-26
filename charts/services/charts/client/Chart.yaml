@@ -9,5 +9,5 @@ appVersion: "1.16.0"
 dependencies:
   - name: common
     condition: common.enabled
-    repository: 'https://microslac.github.io/charts'
+    repository: 'https://chart.microslac.com'
     version: 0.1.0
