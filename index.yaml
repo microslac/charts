@@ -22,6 +22,22 @@ entries:
     urls:
     - https://github.com/microslac/charts/releases/download/api-0.1.0/api-0.1.0.tgz
     version: 0.1.0
+  argo:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2024-04-26T07:46:57.096287541Z"
+    dependencies:
+    - condition: argo-cd.enabled
+      name: argo-cd
+      repository: https://argoproj.github.io/argo-helm
+      version: 6.7.15
+    description: A Helm chart for Kubernetes
+    digest: 3f9f8a92902faa8f0b194401cb45b11297e7b71cde7973b2012f5dd0f36b5457
+    name: argo
+    type: application
+    urls:
+    - https://github.com/microslac/charts/releases/download/argo-0.1.0/argo-0.1.0.tgz
+    version: 0.1.0
   caches:
   - apiVersion: v2
     appVersion: 1.16.0
@@ -157,4 +173,4 @@ entries:
     urls:
     - https://github.com/microslac/charts/releases/download/streams-0.1.0/streams-0.1.0.tgz
     version: 0.1.0
-generated: "2024-04-26T06:43:24.942186637Z"
+generated: "2024-04-26T07:46:57.096298371Z"
