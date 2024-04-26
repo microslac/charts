@@ -1,0 +1,26 @@
+global: { }
+
+nameOverride: ""
+fullnameOverride: ""
+
+argo-cd:
+  enabled: true
+
+  redis-ha:
+    enabled: true
+
+  controller:
+    replicas: 1
+
+  server:
+    replicas: 1
+    service:
+      type: NodePort
+      servicePortHttp: 9080
+      servicePortHttps: 9443
+
+  repoServer:
+    replicas: 1
+
+  applicationSet:
+    replicas: 1

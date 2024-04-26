@@ -23,7 +23,7 @@ jobs:
 
       - name: Run helm dependencies
         run: |
-          charts=('api' 'caches' 'common' 'database' 'queues' 'streams')
+          charts=('api' 'argo' 'caches' 'common' 'database' 'queues' 'streams')  # TODO: ls
           for chart in ${charts[@]}; do
             helm dependency list ./charts/$chart 2> /dev/null | tail +2 | head -n -1 | awk '{ print "helm repo add " $1 " " $3 }' | while read cmd; do $cmd; done
           done

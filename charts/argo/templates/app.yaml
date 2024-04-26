@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argocd
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: argocd
+    server: kubernetes.default.svc
+  project: argocd
+  source:
+    path: apps
+    repoURL: https://github.com/microslac/argo
+    targetRevision: HEAD
+  syncPolicy:
+    automated: { }
