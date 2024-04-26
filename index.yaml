@@ -113,6 +113,57 @@ entries:
   services:
   - apiVersion: v2
     appVersion: 1.16.0
+    created: "2024-04-26T12:13:26.9860963Z"
+    dependencies:
+    - condition: admin.enabled
+      name: admin
+      repository: file://charts/admin
+      version: 0.1.0
+    - condition: auth.enabled
+      name: auth
+      repository: file://charts/auth
+      version: 0.1.0
+    - condition: conversations.enabled
+      name: conversations
+      repository: file://charts/conversations
+      version: 0.1.0
+    - condition: teams.enabled
+      name: teams
+      repository: file://charts/teams
+      version: 0.1.0
+    - condition: users.enabled
+      name: users
+      repository: file://charts/users
+      version: 0.1.0
+    - condition: client.enabled
+      name: client
+      repository: file://charts/client
+      version: 0.1.0
+    - condition: realtime.enabled
+      name: realtime
+      repository: file://charts/realtime
+      version: 0.1.0
+    - condition: chat.enabled
+      name: chat
+      repository: file://charts/chat
+      version: 0.1.0
+    - condition: inference.enabled
+      name: inference
+      repository: file://charts/inference
+      version: 0.1.0
+    - condition: phi.enabled
+      name: phi
+      repository: file://charts/phi
+      version: 0.1.0
+    description: A Helm chart for Kubernetes
+    digest: 69cffb8ca8b8b755b31257ca03b194fd0ff9505e4c487719a233065f968faf88
+    name: services
+    type: application
+    urls:
+    - https://github.com/microslac/charts/releases/download/services-0.2.0/services-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v2
+    appVersion: 1.16.0
     created: "2024-04-26T06:43:24.821081774Z"
     dependencies:
     - condition: admin.enabled
@@ -173,4 +224,4 @@ entries:
     urls:
     - https://github.com/microslac/charts/releases/download/streams-0.1.0/streams-0.1.0.tgz
     version: 0.1.0
-generated: "2024-04-26T07:46:57.096298371Z"
+generated: "2024-04-26T12:13:26.986130304Z"
