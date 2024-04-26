@@ -1,5 +1,49 @@
 apiVersion: v1
 entries:
+  api:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2024-04-26T06:43:24.28813949Z"
+    dependencies:
+    - alias: controller
+      condition: controller.enabled
+      name: kong
+      repository: https://charts.konghq.com
+      version: 2.37.1
+    - alias: gateway
+      condition: gateway.enabled
+      name: kong
+      repository: https://charts.konghq.com
+      version: 2.37.1
+    description: A Helm chart for Kubernetes
+    digest: 4ccb109bb9a055ddc715b840201f8515d99441fc09b8612458128e799161b1b1
+    name: api
+    type: application
+    urls:
+    - https://github.com/microslac/charts/releases/download/api-0.1.0/api-0.1.0.tgz
+    version: 0.1.0
+  caches:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2024-04-26T06:43:24.417078016Z"
+    dependencies:
+    - alias: auth
+      condition: auth.enabled
+      name: redis
+      repository: https://charts.bitnami.com/bitnami
+      version: 19.0.0
+    - alias: realtime
+      condition: realtime.enabled
+      name: redis
+      repository: https://charts.bitnami.com/bitnami
+      version: 19.0.0
+    description: A Helm chart for Kubernetes
+    digest: 6b7eccc4cadd9db965f7d3a954ba222e08e9c48a3f722577b1626b3b61fae4ef
+    name: caches
+    type: application
+    urls:
+    - https://github.com/microslac/charts/releases/download/caches-0.1.0/caches-0.1.0.tgz
+    version: 0.1.0
   common:
   - apiVersion: v2
     appVersion: 1.16.0
@@ -11,4 +55,106 @@ entries:
     urls:
     - https://github.com/microslac/charts/releases/download/common-0.1.0/common-0.1.0.tgz
     version: 0.1.0
-generated: "2024-04-18T14:59:41.142215611Z"
+  databases:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2024-04-26T06:43:24.529579153Z"
+    dependencies:
+    - alias: master
+      condition: master.enabled
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: 14.3.1
+    - alias: slave
+      condition: slave.enabled
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: 14.3.1
+    description: A Helm chart for Kubernetes
+    digest: 167597e201cb307d9fcd0571939823435db94b61773bc36852e5d1c2d7d80c90
+    name: databases
+    type: application
+    urls:
+    - https://github.com/microslac/charts/releases/download/databases-0.1.0/databases-0.1.0.tgz
+    version: 0.1.0
+  queues:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2024-04-26T06:43:24.644492941Z"
+    dependencies:
+    - alias: primary
+      condition: primary.enabled
+      name: rabbitmq
+      repository: https://charts.bitnami.com/bitnami
+      version: 13.0.0
+    description: A Helm chart for Kubernetes
+    digest: 88d73e17197154d59cb57533be8ae28faf6defe4a163f0db4e8b0c4a059a675b
+    name: queues
+    type: application
+    urls:
+    - https://github.com/microslac/charts/releases/download/queues-0.1.0/queues-0.1.0.tgz
+    version: 0.1.0
+  services:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2024-04-26T06:43:24.821081774Z"
+    dependencies:
+    - condition: admin.enabled
+      name: admin
+      repository: file://charts/admin
+      version: 0.1.0
+    - condition: auth.enabled
+      name: auth
+      repository: file://charts/auth
+      version: 0.1.0
+    - condition: conversations.enabled
+      name: conversations
+      repository: file://charts/conversations
+      version: 0.1.0
+    - condition: teams.enabled
+      name: teams
+      repository: file://charts/teams
+      version: 0.1.0
+    - condition: users.enabled
+      name: users
+      repository: file://charts/users
+      version: 0.1.0
+    - condition: client.enabled
+      name: client
+      repository: file://charts/client
+      version: 0.1.0
+    - condition: realtime.enabled
+      name: realtime
+      repository: file://charts/realtime
+      version: 0.1.0
+    - condition: chat.enabled
+      name: chat
+      repository: file://charts/chat
+      version: 0.1.0
+    - condition: inference.enabled
+      name: inference
+      repository: file://charts/inference
+      version: 0.1.0
+    - condition: phi.enabled
+      name: phi
+      repository: file://charts/phi
+      version: 0.1.0
+    description: A Helm chart for Kubernetes
+    digest: 0f11d0f3e1cc71483157561a9217290f341d7935a63ed35100cee10844523dbc
+    name: services
+    type: application
+    urls:
+    - https://github.com/microslac/charts/releases/download/services-0.1.0/services-0.1.0.tgz
+    version: 0.1.0
+  streams:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2024-04-26T06:43:24.942180065Z"
+    description: A Helm chart for Kubernetes
+    digest: b06ae22ac14f312c212b01111a6d0293e7c06703e00f260030f27892cdb56c7e
+    name: streams
+    type: application
+    urls:
+    - https://github.com/microslac/charts/releases/download/streams-0.1.0/streams-0.1.0.tgz
+    version: 0.1.0
+generated: "2024-04-26T06:43:24.942186637Z"
