@@ -1,0 +1,44 @@
+name: kafka
+nameOverride: ""
+fullnameOverride: ""
+
+environment:
+  name: ""
+
+serviceAccount:
+  create: true
+  automount: true
+  annotations: { }
+  name: ""
+
+global:
+  storageClass: nfs
+
+kafka:
+  port: 9092
+  externalPort: 29092
+  image: confluentinc/cp-kafka:7.6.0
+
+controller:
+  port: 9093
+
+connect:
+  port: 8083
+  image: microslac/kafka-connect
+  imagePullPolicy: IfNotPresent
+
+ksqldb:
+  server:
+    port: 8088
+    image: confluentinc/ksqldb-server:latest
+  cli:
+    image: confluentinc/cp-ksqldb-cli:7.6.0
+
+schema:
+  port: 8081
+  externalPort: 9081
+  image: confluentinc/cp-schema-registry:7.6.0
+
+ui:
+  port: 8080
+  image: provectuslabs/kafka-ui

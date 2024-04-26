@@ -1,0 +1,68 @@
+apiVersion: configuration.konghq.com/v1
+kind: KongClusterPlugin
+metadata:
+  name: {{ .Release.Namespace }}-custom-auth
+  annotations:
+    kubernetes.io/ingress.class: {{ .Values.controller.ingressController.ingressClass }}
+  labels:
+    global: "true"
+config:
+  auth:
+    endpoint: http://{{ .Values.auth.clusterIp }}:{{ .Values.auth.port }}/auth/verify
+    header: Authorization
+    method: POST
+  public_paths:
+    - public
+    - oauth2
+    - auth
+    - ws
+plugin: custom-auth
+---
+apiVersion: configuration.konghq.com/v1
+kind: KongClusterPlugin
+metadata:
+  name: {{ .Release.Namespace }}-request-transformer
+  annotations:
+    kubernetes.io/ingress.class: {{ .Values.controller.ingressController.ingressClass }}
+  labels:
+    global: "true"
+config:
+  remove:
+    headers:
+      - x-internal
+plugin: request-transformer
+---
+apiVersion: configuration.konghq.com/v1
+kind: KongClusterPlugin
+metadata:
+  name: {{ .Release.Namespace }}-cors
+  annotations:
+    kubernetes.io/ingress.class: {{ .Values.controller.ingressController.ingressClass }}
+  labels:
+    global: "true"
+config:
+  origins:
+    {{- range .Values.cors.origins }}
+    - {{ . | quote }}
+    {{- end }}
+  headers:
+    - Accept
+    - Accept-Encoding
+    - Accept-Language
+    - Accept-Version
+    - Authorization
+    - Cache-Control
+    - Connection
+    - Content-Length
+    - Content-MD5
+    - Content-Type
+    - Host
+    - Origin
+    - Pragma
+    - Referer
+    - User-Agent
+    - X-Requested-With
+  preflight_continue: true
+  credentials: true
+  max_age: 3600
+plugin: cors

@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kong-plugin-custom-auth
+  namespace: {{ .Release.Namespace }}
+data:
+  access.lua: |-
+{{ .Files.Get "plugins/custom-auth/access.lua" | indent 4 }}
+  handler.lua: |-
+{{ .Files.Get "plugins/custom-auth/handler.lua" | indent 4 }}
+  schema.lua: |-
+{{ .Files.Get "plugins/custom-auth/schema.lua" | indent 4 }}

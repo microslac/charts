@@ -1,0 +1,71 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ksqldb-config
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: ksqldb
+data:
+  KSQL_BOOTSTRAP_SERVERS: 'kafka:{{ .Values.kafka.port }}'
+  KSQL_HOST_NAME: 'ksqldb-server'
+  KSQL_LISTENERS: 'http://0.0.0.0:{{ .Values.ksqldb.server.port }}'
+  KSQL_KSQL_CONNECT_URL: 'http://kafka-connect:{{ .Values.connect.port }}'
+  KSQL_KSQL_SCHEMA_REGISTRY_URL: 'http://kafka-schema:{{ .Values.schema.port }}'
+  KSQL_PRODUCER_INTERCEPTOR_CLASSES: 'io.confluent.monitoring.clients.interceptor.MonitoringProducerInterceptor'
+  KSQL_CONSUMER_INTERCEPTOR_CLASSES: 'io.confluent.monitoring.clients.interceptor.MonitoringConsumerInterceptor'
+  KSQL_KSQL_LOGGING_PROCESSING_TOPIC_REPLICATION_FACTOR: '1'
+  KSQL_KSQL_LOGGING_PROCESSING_TOPIC_AUTO_CREATE: 'true'
+  KSQL_KSQL_LOGGING_PROCESSING_STREAM_AUTO_CREATE: 'true'
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: ksqldb-server
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: ksqldb-server
+spec:
+  selector:
+    matchLabels:
+      app: ksqldb-server
+  serviceName: ksqldb-server
+  template:
+    metadata:
+      labels:
+        app: ksqldb-server
+    spec:
+      containers:
+        - name: ksqldb-server
+          image: {{ .Values.ksqldb.server.image }}
+          ports:
+            - containerPort: {{ .Values.ksqldb.server.port }}
+          envFrom:
+            - configMapRef:
+                name: ksqldb-config
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        storageClassName: {{ .Values.global.storageClass }}
+        accessModes:
+          - "ReadWriteOnce"
+        resources:
+          requests:
+            storage: "5Gi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ksqldb-server
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: ksqldb-server
+spec:
+  clusterIP: None
+  selector:
+    app: ksqldb-server
+  ports:
+    - name: ksqldb-server
+      port: {{ .Values.ksqldb.server.port }}
+      protocol: TCP

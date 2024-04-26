@@ -1,0 +1,14 @@
+apiVersion: v2
+name: queues
+description: A Helm chart for Kubernetes
+
+type: application
+version: 0.1.0
+appVersion: "1.16.0"
+
+dependencies:
+  - alias: primary
+    name: rabbitmq
+    condition: primary.enabled
+    repository: 'https://charts.bitnami.com/bitnami'
+    version: 13.0.0

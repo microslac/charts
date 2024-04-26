@@ -1,0 +1,72 @@
+name: api
+nameOverride: ''
+fullnameOverride: ''
+
+environment:
+  name: ''
+
+serviceAccount:
+  create: true
+  automount: true
+  annotations: { }
+  name: ''
+
+services:
+  - name: admin
+    path: healthcheck
+    port: 8010
+
+xservices: [ ]
+
+controller:
+  enabled: true
+  deployment:
+    kong:
+      enabled: false
+  ingressController:
+    enabled: true
+    ingressClass: kong  # override
+    gatewayDiscovery:
+      enabled: true
+      generateAdminApiService: true
+  podAnnotations:
+    kuma.io/gateway: enabled
+    traffic.kuma.io/exclude-outbound-ports: "8444"
+    traffic.sidecar.istio.io/excludeOutboundPorts: "8444"
+
+gateway:
+  enabled: true
+  deployment:
+    kong:
+      enabled: true
+  admin:
+    enabled: true
+    type: ClusterIP
+    clusterIP: None
+    http:
+      enabled: true
+  plugins:
+    configMaps:
+      - name: kong-plugin-custom-auth
+        pluginName: custom-auth
+  ingressController:
+    enabled: false
+  env:
+    role: traditional
+    database: "off"
+
+ingress:
+  enabled: true
+
+cors:
+  origins:
+    - http://localhost:3000
+    - https://localhost:3000
+
+auth:
+  clusterIp: ''
+  port: ''
+
+cert:
+  domain: ""
+  originCAKey: ""

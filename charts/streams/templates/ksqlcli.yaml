@@ -1,0 +1,61 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ksqldb-queries
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: ksqldb
+data:
+  sources.sql: |-
+{{ .Files.Get "ksqldb/sources.sql" | indent 4 }}
+  sinks.sql: |-
+{{ .Files.Get "ksqldb/sinks.sql" | indent 4 }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ksqldb-cli
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: ksqldb-cli
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ksqldb-cli
+  template:
+    metadata:
+      labels:
+        app: ksqldb-cli
+    spec:
+      initContainers:
+        - name: ksqldb-init
+          image: {{ .Values.ksqldb.cli.image }}
+          env:
+            - name: KSQLDB_SERVER
+              value: "http://ksqldb-server:8088"
+          command: [ "/bin/sh", "-c" ]
+          args:
+            - >
+              ksql --file /home/appuser/sources.sql -- $KSQLDB_SERVER &&
+              ksql --file /home/appuser/sinks.sql -- $KSQLDB_SERVER
+          volumeMounts:
+            - name: queries
+              subPath: sources.sql
+              mountPath: /home/appuser/sources.sql
+            - name: queries
+              subPath: sinks.sql
+              mountPath: /home/appuser/sinks.sql
+      containers:
+        - name: ksqldb-cli
+          image: {{ .Values.ksqldb.cli.image }}
+          env:
+            - name: KSQLDB_SERVER
+              value: "http://ksqldb-server:8088"
+          tty: true
+          stdin: true
+      volumes:
+        - name: queries
+          configMap:
+            name: ksqldb-queries

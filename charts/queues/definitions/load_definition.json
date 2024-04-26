@@ -1,0 +1,38 @@
+{
+  "rabbit_version": "3.6.6",
+  "vhosts": [
+    {
+      "name": "\/"
+    }
+  ],
+  "users": [
+    {
+      "name": "admin",
+      "password": "password",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": "administrator"
+    },
+    {
+      "name": "appuser",
+      "password": "password",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": "administrator"
+    }
+  ],
+  "permissions": [
+    {
+      "user": "admin",
+      "vhost": "/",
+      "configure": ".*",
+      "write": ".*",
+      "read": ".*"
+    },
+    {
+      "user": "appuser",
+      "vhost": "/",
+      "configure": ".*",
+      "write": ".*",
+      "read": ".*"
+    }
+  ]
+}

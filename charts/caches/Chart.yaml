@@ -1,0 +1,21 @@
+apiVersion: v2
+name: caches
+description: A Helm chart for Kubernetes
+
+type: application
+version: 0.1.0
+appVersion: "1.16.0"
+
+dependencies:
+  - alias: auth
+    name: redis
+    condition: auth.enabled
+    repository: 'https://charts.bitnami.com/bitnami'
+    version: 19.0.0
+
+  - alias: realtime
+    name: redis
+    condition: realtime.enabled
+    repository: 'https://charts.bitnami.com/bitnami'
+    version: 19.0.0
+

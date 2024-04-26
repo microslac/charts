@@ -1,0 +1,29 @@
+name: caches
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+  automount: true
+  annotations: {}
+  name: ""
+
+auth:
+  enabled: true
+  fullnameOverride: redis-auth
+  architecture: standalone
+  auth:
+    enabled: false
+  master:
+    persistence:
+      enabled: false
+
+realtime:
+  enabled: true
+  fullnameOverride: redis-realtime
+  architecture: standalone
+  auth:
+    enabled: false
+  master:
+    persistence:
+      enabled: false

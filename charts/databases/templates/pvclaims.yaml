@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  namespace: {{ .Release.Namespace }}
+  name: {{ .Values.master.primary.persistence.existingClaim }}
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 50Gi
+  storageClassName: {{ .Values.global.storageClass }}
+  volumeName: {{ .Values.master.primary.persistence.existingVolume }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  namespace: {{ .Release.Namespace }}
+  name: {{ .Values.slave.primary.persistence.existingClaim }}
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 50Gi
+  storageClassName: {{ .Values.global.storageClass }}
+  volumeName: {{ .Values.slave.primary.persistence.existingVolume }}

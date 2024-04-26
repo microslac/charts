@@ -1,0 +1,76 @@
+name: queues
+nameOverride: ''
+fullnameOverride: ''
+
+serviceAccount:
+  create: true
+  automount: true
+  annotations: { }
+  name: ''
+
+global:
+  storageClass: nfs
+
+primary:
+  enabled: true
+  fullnameOverride: rabbitmq-primary
+  auth:
+    username: admin
+    password: password
+  extraSecrets:
+    load-definition:
+      load_definition.json: |
+        {
+          "rabbit_version": "3.6.6",
+          "vhosts": [
+            {
+              "name": "\/"
+            }
+          ],
+          "users": [
+            {
+              "name": "admin",
+              "password": "password",
+              "hashing_algorithm": "rabbit_password_hashing_sha256",
+              "tags": "administrator"
+            },
+            {
+              "name": "appuser",
+              "password": "password",
+              "hashing_algorithm": "rabbit_password_hashing_sha256",
+              "tags": "administrator"
+            }
+          ],
+          "permissions": [
+            {
+              "user": "admin",
+              "vhost": "/",
+              "configure": ".*",
+              "write": ".*",
+              "read": ".*"
+            },
+            {
+              "user": "appuser",
+              "vhost": "/",
+              "configure": ".*",
+              "write": ".*",
+              "read": ".*"
+            }
+          ]
+        }
+  loadDefinition:
+    enabled: true
+    existingSecret: load-definition
+  extraConfiguration: |
+    default_vhost = /
+    load_definitions = /app/load_definition.json
+  memoryHighWatermark:
+    enabled: true
+    type: relative
+    value: 0.4
+  resources:
+    limits:
+      memory: 2Gi
+  persistence:
+    existingClaim: ""
+    existingVolume: ""  # custom

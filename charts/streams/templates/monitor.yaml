@@ -1,0 +1,46 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kafka-ui
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: kafka-ui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kafka-ui
+  template:
+    metadata:
+      labels:
+        app: kafka-ui
+    spec:
+      containers:
+        - name: kafka-ui
+          image: {{ .Values.ui.image }}
+          ports:
+            - containerPort: {{ .Values.ui.port }}
+          env:
+            - name: DYNAMIC_CONFIG_ENABLED
+              value: 'true'
+            - name: KAFKA_CLUSTERS_0_NAME
+              value: primary
+            - name: KAFKA_CLUSTERS_0_BOOTSTRAP_SERVERS
+              value: 'kafka:{{ .Values.kafka.port }}'
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kafka-ui
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: kafka-ui
+spec:
+  selector:
+    app: kafka-ui
+  ports:
+    - name: kafka-ui
+      port: {{ .Values.ui.port }}
+      protocol: TCP
+  type: NodePort

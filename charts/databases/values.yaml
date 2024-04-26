@@ -1,0 +1,56 @@
+name: databases
+nameOverride: ""
+fullnameOverride: ""
+
+environment:
+  name: ""
+
+serviceAccount:
+  create: true
+  automount: true
+  annotations: { }
+  name: ""
+
+global:
+  storageClass: nfs
+
+master:
+  enabled: true
+  fullnameOverride: postgres-master
+  auth:
+    username: postgres
+    postgresPassword: password
+  primary:
+    resourcesPreset: medium
+    persistence:
+      existingClaim: ""
+      existingVolume: ""  # custom
+      size: 10Gi
+    extendedConfiguration: |-
+      wal_level = logical
+    initdb:
+      scripts:
+        init.sql: |
+          SELECT 'CREATE DATABASE auth' WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = 'auth')\gexec
+          SELECT 'CREATE DATABASE admin' WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = 'admin')\gexec
+          SELECT 'CREATE DATABASE conversations' WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = 'conversations')\gexec
+          SELECT 'CREATE DATABASE teams' WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = 'teams')\gexec
+          SELECT 'CREATE DATABASE users' WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = 'users')\gexec
+          SELECT 'CREATE DATABASE chat' WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = 'chat')\gexec
+
+slave:
+  enabled: true
+  fullnameOverride: postgres-slave
+  auth:
+    username: postgres
+    postgresPassword: password
+  primary:
+    resourcesPreset: medium
+    persistence:
+      existingClaim: ""
+      existingVolume: ""  # custom
+      size: 10Gi
+    initdb:
+      scripts:
+        init.sql: |
+          SELECT 'CREATE DATABASE client' WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = 'client')\gexec
