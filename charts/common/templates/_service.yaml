@@ -10,6 +10,7 @@ metadata:
 spec:
   selector:
     app: {{ .Values.name }}
+  type: {{ .Values.service.type }}
   clusterIP: {{ default "None" .Values.service.clusterIp }}
   ports:
     - name: {{ .Values.name }}
